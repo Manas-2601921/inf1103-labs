@@ -34,3 +34,12 @@ def calculate_tax(value):
 def generate_report(final_total_value, userFailedAttempts):
     print("The total units in your inventory are: ", final_total_value)
     print("Number of failed/rejected entries: ",userFailedAttempts)
+
+while True:
+    validatedUserInput = get_valid_input()
+    if validatedUserInput == "quit":
+        break
+    else:
+        taxed_amt = calculate_tax(validatedUserInput)
+        inventory = process_delivery(inventory, taxed_amt)
+generate_report(inventory, failedAttempts)
