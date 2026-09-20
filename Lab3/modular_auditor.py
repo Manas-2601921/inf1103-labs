@@ -28,11 +28,12 @@ def process_delivery(currentTotal, newValue):
 
 def calculate_tax(value):
     taxedAmt = 0.10*value
-    finalTaxedAmt = taxedAmt + value
+    finalTaxedAmt = int(taxedAmt + value)
     return finalTaxedAmt
 
 def generate_report(finalTotalValue, userFailedAttempts):
-    print("Total Deliveries Processed: ", finalTotalValue)
+    intFinalTotalValue = int(finalTotalValue)
+    print("Total Deliveries Processed: ", intFinalTotalValue)
     print("Number of failed/rejected entries: ",userFailedAttempts)
 
 while True:
