@@ -32,7 +32,7 @@ def calculate_tax(value):
     return final_taxed_amt
 
 def generate_report(final_total_value, userFailedAttempts):
-    print("The total units in your inventory are: ", final_total_value)
+    print("Total Deliveries Processed: ", final_total_value)
     print("Number of failed/rejected entries: ",userFailedAttempts)
 
 while True:
