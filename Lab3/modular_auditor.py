@@ -22,17 +22,17 @@ def get_valid_input():
         else:
             return intInputToValidate
         
-def process_delivery(current_total, new_value):
-    new_total = current_total + new_value
-    return new_total
+def process_delivery(currentTotal, newValue):
+    newTotal = currentTotal + newValue
+    return newTotal
 
 def calculate_tax(value):
-    taxed_amt = 0.10*value
-    final_taxed_amt = taxed_amt + value
-    return final_taxed_amt
+    taxedAmt = 0.10*value
+    finalTaxedAmt = taxedAmt + value
+    return finalTaxedAmt
 
-def generate_report(final_total_value, userFailedAttempts):
-    print("Total Deliveries Processed: ", final_total_value)
+def generate_report(finalTotalValue, userFailedAttempts):
+    print("Total Deliveries Processed: ", finalTotalValue)
     print("Number of failed/rejected entries: ",userFailedAttempts)
 
 while True:
@@ -40,6 +40,6 @@ while True:
     if validatedUserInput == "quit":
         break
     else:
-        taxed_amt = calculate_tax(validatedUserInput)
-        inventory = process_delivery(inventory, taxed_amt)
+        taxedAmt = calculate_tax(validatedUserInput)
+        inventory = process_delivery(inventory, taxedAmt)
 generate_report(inventory, failedAttempts)
