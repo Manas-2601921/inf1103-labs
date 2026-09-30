@@ -47,7 +47,7 @@ def save_inventory(productName, productQuantity):
             print("New order added:")
             print(itemToWrite)
             print("\n")
-            print("Orders successfully saved to orders.txt")
+            print("Orders successfully saved to inventory.txt")
             return True
 
 def load_inventory():
