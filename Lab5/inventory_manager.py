@@ -25,12 +25,6 @@ def display_all(productData):
         for product in productData:
             print(f"ID: {product["productid"]} | Name: {product["Name"]} | Price: ${str(product["Price"])} | Stock: {str(product["Stock"])}")
             print("---")
-def add_product(dataToAdd,newId, newName, newPrice, newStock):
-    newProductData = {"productid":newId,"Name": newName, "Price": float(newPrice), "Stock": int(newStock)}
-    dataToAdd.append(newProductData)
-    return True
-
-    
 
 def check_product_values(field,value):
     if field == "productId":
@@ -57,6 +51,41 @@ def check_product_values(field,value):
             return False
     else:
         return False
+
+def add_product(dataToAdd,newId, newName, newPrice, newStock):
+    newProductData = {"productid":newId,"Name": newName, "Price": float(newPrice), "Stock": int(newStock)}
+    dataToAdd.append(newProductData)
+    return True
+
+def update_stock(productData, productIDUpdate):
+    for item in productData:
+        if(item["productid"] == productIDUpdate):
+            print(f"Product Found:\n Name:{item['Name']}\nCurrent Stock:{item['Stock']}")
+            newQuantity = int(input("New stock quantity: "))
+            item['Stock'] = newQuantity
+            print("Stock Updated successfully!")
+
+def search_product(productData, productIDSearch):
+    for item in productData:
+                if(item["productid"] == productIDSearch):
+                    print(f"Product Found:---\n Name:{item['Name']}\nCurrent Stock:{item['Stock']}\n---")
+
+def save_inventory(itemsToAdd):
+    with open('inventory.json','w',encoding="utf-8") as fileHandler:
+        json.dump(itemsToAdd,fileHandler)
+    print("Iventory successfully saved to inventory.json")
+    return True
+
+def load_inventory():
+        if not os.path.exists('inventory.json'):
+            with open('inventory.json','w',encoding='utf-8') as fileWriter:
+                json.dump([],fileWriter)
+        else:
+            print("inventory.json found")
+            with open('inventory.json','r',encoding='utf-8') as fileReader:
+                products = json.load(fileReader)
+                print("inventory loaded successfully")
+                return products
 
 def handle_user_input_options(userInputOptions,dataToHandle):
     productData = dataToHandle
@@ -86,17 +115,10 @@ def handle_user_input_options(userInputOptions,dataToHandle):
         #productData.append({"productid":newProductID,"Name": newProductName, "Price": float(newProductPrice), "Stock": int(newStockQuantity)})
     elif(userInputOptions == 3):
         productIDUpdate = input("Enter product ID: ")
-        for item in productData:
-            if(item["productid"] == productIDUpdate):
-                print(f"Product Found:\n Name:{item['Name']}\nCurrent Stock:{item['Stock']}")
-                newQuantity = int(input("New stock quantity: "))
-                item['Stock'] = newQuantity
-                print("Stock Updated successfully!")
+        update_stock(productData,productIDUpdate)
     elif(userInputOptions ==4):
-        productIDUpdate = int(input("Enter product ID: "))
-        for item in productData:
-            if(item["productid"] == productIDUpdate):
-                print(f"Product Found:---\n Name:{item['Name']}\nCurrent Stock:{item['Stock']}\n---")
+        productIDSearch = int(input("Enter product ID: "))
+        search_product(productData,productIDSearch)
     elif(userInputOptions ==5):
         save_inventory(productData)
 
@@ -104,36 +126,7 @@ def handle_user_input_options(userInputOptions,dataToHandle):
         print("Saving inventory before exit...")
         save_inventory(productData)
         print("Thank you for using Inventory Management System.\nProgram Terminated")
-def save_inventory(itemsToAdd):
-    with open('inventory.json','w',encoding="utf-8") as fileHandler:
-        json.dump(itemsToAdd,fileHandler)
-    print("Iventory successfully saved to inventory.json")
-    return True
 
-def load_inventory():
-        if not os.path.exists('inventory.json'):
-            with open('inventory.json','w',encoding='utf-8') as fileWriter:
-                json.dump([],fileWriter)
-        else:
-            print("inventory.json found")
-            with open('inventory.json','r',encoding='utf-8') as fileReader:
-                products = json.load(fileReader)
-                print("inventory loaded successfully")
-                return products
-
-
-def generate_report():
-    totalquantity = 0
-    print("===== Audit Report ====")
-    with open('inventory.txt','r+',encoding="utf-8") as fileHandler:
-        records = fileHandler.readlines()
-        print("Total transactions recorded: " + str(len(records)) )
-        for record in records:
-            quantity = int(record.split(',')[2])
-            totalquantity = totalquantity + quantity
-        print("Total Units Processed: " + str(totalquantity) )
-        print("Number of Failed/Rejected Entries: " + str(failedAttempts))
-        
 data = load_inventory()
 print("\n")
 while True:
