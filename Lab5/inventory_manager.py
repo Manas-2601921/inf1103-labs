@@ -2,16 +2,7 @@
 import json;
 import os;
 
-failedAttempts = 0
-
 def handle_valid_product_input():
-    global failedAttempts
-    welcomeBannner = f"=============================\nINVENTORY MANAGEMENT SYSTEM\n============================="
-    print(welcomeBannner)
-    print("---Menu---")
-    options = f"1. Display All Products\n2. Add Product\n3. Update Stock\n4. Search Product\n5. Save Inventory\n6. Exit"
-    print(options)
-    print("------")
     userOption = input("Enter option: ")
     if userOption.isdigit() == True:
         return int(userOption)
@@ -23,8 +14,7 @@ def display_all(productData):
     else:
         print("Current Inventory\n---")
         for product in productData:
-            print(f"ID: {product["productid"]} | Name: {product["Name"]} | Price: ${str(product["Price"])} | Stock: {str(product["Stock"])}")
-            print("---")
+            print(f"ID: {product['productid']} | Name: {product['Name']} | Price: ${float(product['Price']):.2f} | Stock: {str(product['Stock'])}")
 
 def add_product(dataToAdd):
     newProductID = input("ProductID: ")
@@ -32,73 +22,91 @@ def add_product(dataToAdd):
     newProductPrice = input("Product Price: ")            
     newStockQuantity = input("Stock Quantity: ")
     if(newProductID == "" and newProductName == ""):
-        return False
+        print("\nUnable to add products. Some Fields are not entered correctly.")
     else:
         try:               
             newProductData = {"productid":newProductID,"Name": newProductName, "Price": float(newProductPrice), "Stock": int(newStockQuantity)}
             dataToAdd.append(newProductData)
-            return True
+            print("\nProduct added successfully!")
         except ValueError:
-            return False
+            print("\nUnable to add products. Some Fields are not entered correctly.")
 
 def update_stock(productData, productIDUpdate):
+    productFound = False
     for item in productData:
         if(item["productid"] == productIDUpdate):
-            print(f"Product Found:\n Name:{item['Name']}\nCurrent Stock:{item['Stock']}")
-            newQuantity = int(input("New stock quantity: "))
-            item['Stock'] = newQuantity
-            print("Stock Updated successfully!")
+            productFound = True
+            print(f"Product Found:\nName:{item['Name']}\nCurrent Stock:{item['Stock']}")
+            try:
+                newQuantity = int(input("New stock quantity: "))
+                item['Stock'] = newQuantity
+                print("Stock Updated successfully!")
+            except ValueError:
+                print("Invalid stock quantity entered. Stock quantity must be an integer.")
+    if(productFound == False):
+        print("Product not found.")
+        
 
 def search_product(productData, productIDSearch):
+    productFound = False
     for item in productData:
-                if(item["productid"] == productIDSearch):
-                    print(f"Product Found:---\n Name:{item['Name']}\nCurrent Stock:{item['Stock']}\n---")
+        if(item["productid"] == productIDSearch):
+            print(f"Product Found:\n---\nID: {item['productid']}\nName: {item['Name']}\nPrice: ${float(item['Price']):.2f}\nStock: {item['Stock']}\n---")
+            productFound = True
+    if productFound == False:
+        print("\n\nProduct not found.")
+        
+    
 
 def save_inventory(itemsToAdd):
+    print("Saving inventory...")
     with open('inventory.json','w',encoding="utf-8") as fileHandler:
         json.dump(itemsToAdd,fileHandler)
-    print("Iventory successfully saved to inventory.json")
+    print("Inventory successfully saved to inventory.json")
     return True
 
 def load_inventory():
         if not os.path.exists('inventory.json'):
-            with open('inventory.json','w',encoding='utf-8') as fileWriter:
-                json.dump([],fileWriter)
+            with open('inventory.json','w',encoding='utf-8') as fileHandler:
+                json.dump([],fileHandler)
+            print("inventory.json found.")
+            return []
         else:
-            print("inventory.json found")
+            print("inventory.json found.")
             with open('inventory.json','r',encoding='utf-8') as fileReader:
                 products = json.load(fileReader)
                 print("inventory loaded successfully")
                 return products
-
-def handle_user_input_options(userInputOptions,dataToHandle):
-    productData = dataToHandle
-    if(userInputOptions ==1):
-        display_all(productData)
-    elif(userInputOptions == 2):
-        print("Add a new product")
-        add_product()
-        if(add_product() == True):
-            print("\nProduct added successfully!")
-        else:
-            print("\nUnable to add products. Some Fields are not entered correctly.")
-        #productData.append({"productid":newProductID,"Name": newProductName, "Price": float(newProductPrice), "Stock": int(newStockQuantity)})
-    elif(userInputOptions == 3):
-        productIDUpdate = input("Enter product ID: ")
-        update_stock(productData,productIDUpdate)
-    elif(userInputOptions ==4):
-        productIDSearch = int(input("Enter product ID: "))
-        search_product(productData,productIDSearch)
-    elif(userInputOptions ==5):
-        save_inventory(productData)
-
-    else:
-        print("Saving inventory before exit...")
-        save_inventory(productData)
-        print("Thank you for using Inventory Management System.\nProgram Terminated")
-
+            
+print(f"=============================\nINVENTORY MANAGEMENT SYSTEM\n=============================\n\n")
 data = load_inventory()
-print("\n")
+print("---Menu---")
+options = f"1. Display All Products\n2. Add Product\n3. Update Stock\n4. Search Product\n5. Save Inventory\n6. Exit"
+print(options)
+print("------")
 while True:
     validatedUserInput = handle_valid_product_input() 
-    handle_user_input_options(validatedUserInput,data)
+    if(validatedUserInput ==1):
+        display_all(data)
+    elif(validatedUserInput == 2):
+        print("Add a new product")
+        add_product(data)
+    elif(validatedUserInput == 3):
+        print("Update Stock")
+        productIDUpdate = input("Enter product ID: ")
+        update_stock(data,productIDUpdate)
+    elif(validatedUserInput ==4):
+        print("Search Product")
+        productIDSearch = input("Enter product ID: ")
+        search_product(data,productIDSearch)
+    elif(validatedUserInput ==5):
+        save_inventory(data)
+    elif(validatedUserInput == 6):
+        print("Saving inventory before exit...")
+        save_inventory(data)
+        print("\nThank you for using Inventory Management System.\nProgram Terminated")
+        break
+    else:
+        print("Invalid option entered.")
+        continue
+            
