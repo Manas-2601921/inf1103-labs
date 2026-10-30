@@ -14,9 +14,9 @@ class Product:
     def display_information(self):
         print(f"ProductId: {self.__productid}")
         print(f"Name: {self.__name}")
-        print(f"Price: {self.__price}")
+        print(f"Price: ${self.__price:.2f}")
         print(f"Stock: {self.__stock}")
 
     def product_to_dict(self):
-        return({"productid": self.__productid, "Name": self.__name, "Price": self.__name, "Stock": self.__stock})
+        return({"productid": self.__productid, "Name": self.__name, "Price": self.__price, "Stock": self.__stock})
     
