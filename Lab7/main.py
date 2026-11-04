@@ -41,7 +41,6 @@ def handle_user_input_options(user_input_option, inventory):
             if(isinstance(new_dwnld_size_ft,float)):
                 new_product = DigitalProduct(new_product_id, new_product_name, float(new_product_price), int(new_stock_quantity),new_dwnld_size_ft)
                 inventory.add_product(new_product)
-                inventory.display_all()
                 print("Product has been added successfully.")
         else:
             print("Incorrect option entered. Please enter option number 1 or 2 only.")
