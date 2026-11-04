@@ -6,7 +6,7 @@ class DigitalProduct(Product):
 
     def display_information(self):
         super().display_information()
-        print(f"Download Size: {self.__download_size}MB")
+        print(f"Download Size: {self.__download_size:.2f}MB")
         print("Product Type: Digital")
 
     def get_fulfillment_information():
