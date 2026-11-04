@@ -1,0 +1,3 @@
+[
+  {"productid": "P001", "Name": "Mouse", "Price": 20.0, "Stock": 10, "additional_weight": 0.1, "item_type":"physical"},{"productid": "P002", "Name": "Calculator", "Price": 10.9, "Stock": 200,"additional_weight": 0.2, "item_type":"physical"}
+]
