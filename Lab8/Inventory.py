@@ -7,16 +7,16 @@ class Inventory:
         else:
             self.__inventory_collection:list[Product] = inventory_collection
     #Add Product
-    def add_product(self,product:Product):
+    def add_product(self,product:Product)->None:
         self.__inventory_collection.append(product)
 
-    def remove_product(self,productid:str):
+    def remove_product(self,productid:str)->None:
         product_to_remove = self.find_product(productid)
         if product_to_remove is not None:
             self.__inventory_collection.remove(product_to_remove)
 
     #Search Products
-    def find_product(self,product_id:str):
+    def find_product(self,product_id:str)->Product:
         for collection in self.__inventory_collection:
             if(collection.get_product_id() == product_id):
                 return collection
@@ -24,7 +24,7 @@ class Inventory:
     
 
     #Displays Products
-    def display_all(self):
+    def display_all(self)->None:
         if self.__inventory_collection == [] or None:
             print("---NO ITEMS IN CURRENT INVENTORY---")
         else:
@@ -33,9 +33,7 @@ class Inventory:
                 data.display_information()
                 print("\n")
             print("---")
-    def get_product_data(self):
+    def get_product_data(self)->list[Product]:
         return self.__inventory_collection
 
-    def show_product_details(product: Product) -> None: 
-        product.display_information() 
-        print(product.get_fulfilment_info())
+    

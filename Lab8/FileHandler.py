@@ -6,10 +6,10 @@ from Supplier import Supplier
 from Product import Product
 
 class FileHandler:
-    def __init__(self,file_name):
-        self.__file_name = file_name
+    def __init__(self,file_name:str):
+        self.__file_name:str = file_name
 
-    def load_file(self):
+    def load_file(self)->list[Product]:
         data:list[Product] = []
         if not os.path.exists(self.__file_name):
             with open(self.__file_name,'w',encoding='utf-8') as fileWriter:
@@ -29,7 +29,7 @@ class FileHandler:
                 print(f"file loaded successfully")
                 return data
 
-    def save_file(self,items_to_add:list[Product]):
+    def save_file(self,items_to_add:list[Product])->None:
         saveData = []
         for item in items_to_add:
             saveData.append(item.product_to_dict())
