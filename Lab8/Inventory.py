@@ -16,7 +16,7 @@ class Inventory:
             self.__inventory_collection.remove(product_to_remove)
 
     #Search Products
-    def find_product(self,product_id:str)->Product:
+    def find_product(self,product_id:str)->Product | None:
         for collection in self.__inventory_collection:
             if(collection.get_product_id() == product_id):
                 return collection

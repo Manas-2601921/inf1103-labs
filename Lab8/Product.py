@@ -34,6 +34,6 @@ class Product(ABC):
         return({"productid": self.__productid, "Name": self.__name, "Price": self.__price, "Stock": self.__stock}|supplier_dict)
 
     @abstractmethod
-    def get_fulfillment_information()->str:
+    def get_fulfillment_information(self)->str:
         pass
     
