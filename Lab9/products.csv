@@ -1,0 +1,8 @@
+product_type,product_id,name,price,stock_quantity
+physical,P001,Mouse,20.00,14
+physical,P002,Calculator,10.90,200
+service,S001,Installation,30.00,5
+physical,P003,Water Bottle,abc,2
+physical,P004,Phone,2000.00,20
+physical,P006,Table,250.50,2000
+physical,P007,Pillow,5.50,20
